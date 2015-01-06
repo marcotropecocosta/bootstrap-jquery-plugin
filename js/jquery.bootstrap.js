@@ -28,6 +28,10 @@ require:
 
   $.fn.dialog = function(options) {
 
+
+   var optionmodal = {backdrop:'static'};
+    $.extend(optionmodal, options.modal);
+    
     var self    = this
       , $this   = $(self)
       , $body   = $(document.body)
@@ -107,7 +111,8 @@ require:
 
     var show = function() {
       // call the bootstrap modal to handle the show events (fade effects, body class and backdrop div)
-      $msgbox.modal('show');
+      $('.modal-dialog').addClass('modal-lg');
+    	$msgbox.modal(optionmodal);
     };
 
     var close = function(destroy) {
@@ -118,6 +123,14 @@ require:
                     $msgbox.remove();
                 }
             });
+            
+           if($($this.selector).get(0)!=undefined){
+	 	    	    $($this.selector).html('');
+	 	    	    var dialogclass=$this.closest('.dialog');
+	 	    	    $($this.selector).insertAfter($this.closest('.dialog'));
+	 	        	$(dialogclass).remove();
+	 	       }
+    	 	 
     };
 
     if (options.constructor == Object) {
